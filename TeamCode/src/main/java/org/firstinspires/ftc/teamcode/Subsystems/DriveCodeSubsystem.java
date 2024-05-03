@@ -73,10 +73,10 @@ public class DriveCodeSubsystem extends SubsystemBase {
         frontRight.set(SCurve.Stabilize(frontRightPower, currentMotorDrives[2], maxAccel));
         backLeft.set(SCurve.Stabilize(backLeftPower, currentMotorDrives[3], maxAccel));
         backRight.set(SCurve.Stabilize(backRightPower, currentMotorDrives[4], maxAccel));
-        currentMotorDrives[1] = frontLeftPower;
-        currentMotorDrives[2] = frontRightPower;
-        currentMotorDrives[3] = backLeftPower;
-        currentMotorDrives[4] = backRightPower;
+        currentMotorDrives[1] = frontLeft.get();
+        currentMotorDrives[2] = frontRight.get();
+        currentMotorDrives[3] = backLeft.get();
+        currentMotorDrives[4] = backRight.get();
         dashboardTelemetry.addData("Heading", botHeading);
         dashboardTelemetry.addData("FL",frontLeft.get());
         dashboardTelemetry.addData("FR",frontRight.get());
