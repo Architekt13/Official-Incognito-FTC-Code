@@ -6,11 +6,9 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 
@@ -26,7 +24,6 @@ public class DriveCodeSubsystem extends SubsystemBase {
     MotorEx backRight;
     IMU imu;
     GamepadEx driveGamePad = new GamepadEx(gamepad1);
-    GamepadButton resetIMU = new GamepadButton(driveGamePad, GamepadKeys.Button.START);
     double[] currentMotorDrives = {0,0,0,0};
     public static double maxAccel = 0.05;
     FtcDashboard dashboard = FtcDashboard.getInstance();
@@ -49,6 +46,9 @@ public class DriveCodeSubsystem extends SubsystemBase {
         imu.initialize(parameters);
     }
     public void Driving(){
+        if(driveGamePad.getButton(GamepadKeys.Button.START)){
+            imu.resetYaw();
+        }
         double leftX = driveGamePad.getLeftX();
         double leftY = driveGamePad.getLeftY();
         double rightX = driveGamePad.getRightX();
