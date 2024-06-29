@@ -45,7 +45,7 @@ public class DriveCodeSubsystem extends SubsystemBase {
         imu.initialize(parameters);
         imu.resetYaw();
     }
-    public void Driving(final GamepadEx driveGamePad, final Telemetry dashboardTelemetry){
+    public void Driving(GamepadEx driveGamePad, Telemetry dashboardTelemetry){
         if(driveGamePad.getButton(GamepadKeys.Button.START)){
             imu.resetYaw();
         }
