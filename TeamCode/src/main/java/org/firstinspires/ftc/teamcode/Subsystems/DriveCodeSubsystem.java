@@ -26,8 +26,7 @@ public class DriveCodeSubsystem extends SubsystemBase {
     IMU imu;
     double[] currentMotorDrives = {0,0,0,0};
     public static double maxAccel = 0.05;
-    FtcDashboard dashboard = FtcDashboard.getInstance();
-    Telemetry dashboardTelemetry = dashboard.getTelemetry();
+
     public DriveCodeSubsystem(final HardwareMap hMap){
         backRight = new MotorEx (hMap, "backRight");
         backLeft = new MotorEx (hMap, "backLeft");
@@ -44,8 +43,9 @@ public class DriveCodeSubsystem extends SubsystemBase {
                 RevHubOrientationOnRobot.UsbFacingDirection.UP));
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
+        imu.resetYaw();
     }
-    public void Driving(final GamepadEx driveGamePad){
+    public void Driving(final GamepadEx driveGamePad, final Telemetry dashboardTelemetry){
         if(driveGamePad.getButton(GamepadKeys.Button.START)){
             imu.resetYaw();
         }
