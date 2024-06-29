@@ -9,6 +9,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 
@@ -23,21 +24,20 @@ public class DriveCodeSubsystem extends SubsystemBase {
     MotorEx backLeft;
     MotorEx backRight;
     IMU imu;
-    GamepadEx driveGamePad = new GamepadEx(gamepad1);
     double[] currentMotorDrives = {0,0,0,0};
     public static double maxAccel = 0.05;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
-    public DriveCodeSubsystem(){
-        backRight = new MotorEx (hardwareMap, "backRight");
-        backLeft = new MotorEx (hardwareMap, "backLeft");
-        frontRight = new MotorEx (hardwareMap, "frontRight");
-        frontLeft = new MotorEx (hardwareMap, "frontLeft");
+    public DriveCodeSubsystem(final HardwareMap hMap){
+        backRight = new MotorEx (hMap, "backRight");
+        backLeft = new MotorEx (hMap, "backLeft");
+        frontRight = new MotorEx (hMap, "frontRight");
+        frontLeft = new MotorEx (hMap, "frontLeft");
         frontRight.setInverted(true);
         backRight.setInverted(true);
 
         // Retrieve the IMU from the hardware map
-        IMU imu = hardwareMap.get(IMU.class, "imu");
+        IMU imu = hMap.get(IMU.class, "imu");
         // Adjust the orientation parameters to match your robot
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
@@ -45,7 +45,7 @@ public class DriveCodeSubsystem extends SubsystemBase {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
     }
-    public void Driving(){
+    public void Driving(final GamepadEx driveGamePad){
         if(driveGamePad.getButton(GamepadKeys.Button.START)){
             imu.resetYaw();
         }
